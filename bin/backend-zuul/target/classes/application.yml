@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: zuul
+    
+server:
+  port: 5555    
+    
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:18761/eureka/
+
+zuul:
+  sensitiveHeaders: Cookie,Set-Cookie,Authorization
+  
+  routes:
+    uaa:
+      path: /uaa/**
+      sensitiveHeaders: "*"
+      serviceId: auth-center-quick
+    api-a:
+      path: /api-a/**
+      serviceId: ribbon
+    api-b:
+      path: /api-b/**
+      serviceId: eureka-client
+      
+  add-proxy-headers: true
+  
+  #进行 url 路由的时候 此处超时设置会生效
+  host:
+    connect-timeout-millis: 90000
+    socket-timeout-millis: 100000
+    
+  #开启饿加载 减少第一次请求失败的概率
+  ribbon:
+    eager-load:
+      enabled: true
+
+#进行 serviceId 路有时候 此处超时设置会生效
+ribbon:
+  ReadTimeout: 90000
+  SocketTimeout: 100000
