@@ -18,6 +18,10 @@ zuul:
       path: /uaa/**
       sensitiveHeaders: "*"
       serviceId: auth-center-quick
+    iiot:
+      path: /iiot/**
+      sensitiveHeaders: "*"
+      serviceId: iiot
     api-a:
       path: /api-a/**
       serviceId: ribbon
